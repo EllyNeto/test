@@ -6,7 +6,7 @@
 /*   By: eneto <eneto@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 08:32:43 by eneto             #+#    #+#             */
-/*   Updated: 2024/11/14 12:57:56 by eneto            ###   ########.fr       */
+/*   Updated: 2024/11/14 15:16:58 by eneto            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,9 @@ long					ft_get_time_in_milis(void);
 long					ft_atol(char *str);
 
 //
+int						start_routine(t_mode *mode);
+int						routine(void);
+int						malloc_philos(t_mode *mode);
 int						malloc_struct(t_mode *mode, char **argv);
 
 #endif

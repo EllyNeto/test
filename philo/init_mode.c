@@ -6,7 +6,7 @@
 /*   By: eneto <eneto@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 12:24:30 by eneto             #+#    #+#             */
-/*   Updated: 2024/11/14 13:22:48 by eneto            ###   ########.fr       */
+/*   Updated: 2024/11/14 14:47:06 by eneto            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int     malloc_philos(t_mode *mode)
         mode->philos[i].meals_counter = 0;
         mode->philos[i].last_meal_time = mode->start_actv;
         mode->philos[i].full = 0;
+		mode->philos[i].left_fork = &mode->forks[i];
+		mode->philos[i].right_fork = &mode->forks[(i + 1) % mode->philo_nbr];
         i++;   
     }
     return (0);
