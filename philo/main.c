@@ -6,11 +6,29 @@
 /*   By: eneto <eneto@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 08:35:01 by eneto             #+#    #+#             */
-/*   Updated: 2024/11/14 12:23:55 by eneto            ###   ########.fr       */
+/*   Updated: 2024/11/14 15:08:28 by eneto            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int		start_routine(t_mode *mode)
+{
+	int i;
+
+	i = 0;
+	while(mode->philo_nbr >= i)
+	{
+		pthread_create(mode->philos[i].thread, NULL, routine, &mode->philos[i]);
+		i++;
+	}
+	i = 0;
+	while(mode->philo_nbr >= i)
+	{
+		ptrhead_join(&mode->philos[i].thread , NULL);
+		i++;
+	}
+}
 
 int	main(int argc, char **argv)
 {
