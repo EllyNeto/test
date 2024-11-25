@@ -6,7 +6,7 @@
 /*   By: eneto <eneto@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 08:32:43 by eneto             #+#    #+#             */
-/*   Updated: 2024/11/19 16:14:14 by eneto            ###   ########.fr       */
+/*   Updated: 2024/11/25 16:04:58 by eneto            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <unistd.h>
 
 typedef pthread_mutex_t	t_mtx;
-typedef struct s_mode	t_mode;
+typedef struct s_status	t_status;
 
 typedef struct s_philo
 {
@@ -31,10 +31,10 @@ typedef struct s_philo
 	pthread_mutex_t		*left_fork;
 	pthread_mutex_t		*right_fork;
 	pthread_t			thread;
-	t_mode				*mode;
+	t_status			*status;
 }						t_philo;
 
-typedef struct s_mode
+typedef struct s_status
 {
 	int					philo_nbr;
 	long				time_die;
@@ -45,16 +45,22 @@ typedef struct s_mode
 	int					end_actv;
 	pthread_mutex_t		*forks;
 	t_philo				*philos;
-}						t_mode;
+}						t_status;
 // functioms aux
 long					ft_time_diff(long time);
 long					ft_get_time_in_milis(void);
 long					ft_atol(char *str);
 
-//
-int						start_routine(t_mode *mode);
+//philo alive
+int						start_routine(t_status *status);
 void					*routine(void *m);
-int						malloc_philos(t_mode *mode);
-int						malloc_struct(t_mode *mode, char **argv);
+int						malloc_philos(t_status *status);
+int						malloc_struct(t_status *status, char **argv);
+
+// status
+void					t_eat(t_philo *philo);
+void					v_status(t_status *status);
+void					t_think(t_philo *philo);
+void					t_sleep(t_philo *philo);
 
 #endif
