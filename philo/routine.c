@@ -6,7 +6,7 @@
 /*   By: eneto <eneto@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:08:50 by eneto             #+#    #+#             */
-/*   Updated: 2024/11/27 13:33:28 by eneto            ###   ########.fr       */
+/*   Updated: 2024/11/27 14:35:21 by eneto            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	*ft_routine(void *m)
 
 	philo = (t_philo *)m;
 	if (philo->id % 2)
-		usleep(1);
+		usleep(100);
 	while (1)
 	{
 		pthread_mutex_lock(&philo->status->end_actv_lock);
