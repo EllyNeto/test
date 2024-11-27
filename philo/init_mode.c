@@ -6,13 +6,13 @@
 /*   By: eneto <eneto@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 12:24:30 by eneto             #+#    #+#             */
-/*   Updated: 2024/11/22 13:10:16 by eneto            ###   ########.fr       */
+/*   Updated: 2024/11/27 12:05:27 by eneto            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int     malloc_philos(t_status *status)
+int     ft_malloc_philos(t_status *status)
 {
     int i;
 
@@ -34,7 +34,7 @@ int     malloc_philos(t_status *status)
     return (0);
 }
 
-int	malloc_struct(t_status *status, char **argv)
+int	ft_malloc_struct(t_status *status, char **argv)
 {
 	status->philo_nbr = ft_atol(argv[1]);
 	status->time_die = ft_atol(argv[2]);
@@ -51,7 +51,7 @@ int	malloc_struct(t_status *status, char **argv)
 			return (1);
 	status->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
 			* status->philo_nbr);
-	if (malloc_philos(status) == 1)
+	if (ft_malloc_philos(status) == 1)
 		return (1);
 	return (0);
 }
