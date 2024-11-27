@@ -6,7 +6,7 @@
 /*   By: eneto <eneto@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 08:32:43 by eneto             #+#    #+#             */
-/*   Updated: 2024/11/25 16:04:58 by eneto            ###   ########.fr       */
+/*   Updated: 2024/11/27 12:04:25 by eneto            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,21 @@ typedef struct s_status
 	long				nbr_limit_meals;
 	long				start_actv;
 	int					end_actv;
+	pthread_mutex_t		end_actv_lock;
 	pthread_mutex_t		*forks;
 	t_philo				*philos;
 }						t_status;
 // functioms aux
+void					ft_free_all(t_status *philo);
 long					ft_time_diff(long time);
 long					ft_get_time_in_milis(void);
 long					ft_atol(char *str);
 
-//philo alive
-int						start_routine(t_status *status);
-void					*routine(void *m);
-int						malloc_philos(t_status *status);
-int						malloc_struct(t_status *status, char **argv);
+// philo alive
+int						ft_start_routine(t_status *status);
+void					*ft_routine(void *m);
+int						ft_malloc_philos(t_status *status);
+int						ft_malloc_struct(t_status *status, char **argv);
 
 // status
 void					t_eat(t_philo *philo);

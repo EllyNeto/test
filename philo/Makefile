@@ -8,7 +8,7 @@ OBJS = $(SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME) : $(OBJS)
-		$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -pthread
+		$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -pthread 
 
 clean : 
 		$(RM) $(OBJS)

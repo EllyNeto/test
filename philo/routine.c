@@ -6,21 +6,35 @@
 /*   By: eneto <eneto@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:08:50 by eneto             #+#    #+#             */
-/*   Updated: 2024/11/25 16:12:32 by eneto            ###   ########.fr       */
+/*   Updated: 2024/11/27 13:33:28 by eneto            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	*routine(void *m)
+void	*ft_routine(void *m)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)m;
-	while (philo->meals_counter < philo->status->nbr_limit_meals)
+	if (philo->id % 2)
+		usleep(1);
+	while (1)
 	{
+		pthread_mutex_lock(&philo->status->end_actv_lock);
+		if (philo->status->end_actv)
+			return (pthread_mutex_unlock(&philo->status->end_actv_lock), NULL);
+		pthread_mutex_unlock(&philo->status->end_actv_lock);
 		t_eat(philo);
+		pthread_mutex_lock(&philo->status->end_actv_lock);
+		if (philo->status->end_actv)
+			return (pthread_mutex_unlock(&philo->status->end_actv_lock), NULL);
+		pthread_mutex_unlock(&philo->status->end_actv_lock);
 		t_sleep(philo);
+		pthread_mutex_lock(&philo->status->end_actv_lock);
+		if (philo->status->end_actv)
+			return (pthread_mutex_unlock(&philo->status->end_actv_lock), NULL);
+		pthread_mutex_unlock(&philo->status->end_actv_lock);
 		t_think(philo);
 	}
 	return (NULL);
@@ -30,30 +44,37 @@ void	v_status(t_status *status)
 	int	i;
 
 	i = 0;
+	pthread_mutex_init(&status->end_actv_lock, NULL);
 	while (i < status->philo_nbr)
 	{
 		if (ft_time_diff(status->philos[i].last_meal_time) > status->time_die)
 		{
-			printf("Philo %d is dead.\n", status->philos[i].id);
+			printf("%ld philo %d is dead.\n", ft_time_diff(status->start_actv),
+				status->philos[i].id);
+			pthread_mutex_lock(&status->end_actv_lock);
 			status->end_actv = 1;
+			pthread_mutex_unlock(&status->end_actv_lock);
 			return ;
 		}
 		i++;
 	}
 }
 
-int	start_routine(t_status *status)
+int	ft_start_routine(t_status *status)
 {
 	int i;
 
-	i = -1;
-	while (status->philo_nbr > ++i)
-		pthread_create(&status->philos[i].thread, NULL, routine,
-			&status->philos[i]);
-	while(status->end_actv == 0)
+	i = 0;
+	while (status->philo_nbr > i)
 	{
-		v_status(status);
+		pthread_create(&status->philos[i].thread, NULL, ft_routine,
+			&status->philos[i]);
+		i++;
+	}
+	while (status->end_actv != 1)
+	{
 		usleep(500);
+		v_status(status);
 	}
 	i = -1;
 	while (status->philo_nbr > ++i)
