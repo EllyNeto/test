@@ -6,7 +6,7 @@
 /*   By: eneto <eneto@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 08:32:43 by eneto             #+#    #+#             */
-/*   Updated: 2024/11/27 12:04:25 by eneto            ###   ########.fr       */
+/*   Updated: 2024/11/27 15:10:50 by eneto            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_status	t_status;
 typedef struct s_philo
 {
 	int					id;
+	pthread_mutex_t		meal_lock;
 	long				meals_counter;
 	long				last_meal_time;
 	int					full;
