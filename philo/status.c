@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mode.c                                             :+:      :+:    :+:   */
+/*   status.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eneto <eneto@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:09:20 by eneto             #+#    #+#             */
-/*   Updated: 2024/11/27 16:21:54 by eneto            ###   ########.fr       */
+/*   Updated: 2024/11/28 15:12:25 by eneto            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	t_eat(t_philo *philo)
 	philo->last_meal_time = ft_get_time_in_milis();
 	philo->meals_counter++;
 	ft_lock_f(philo);
-	printf("%ld philo %d is eathing.\n",
+	printf("%ld philo %d is eating.\n",
 		ft_time_diff(philo->status->start_actv), philo->id);
 	usleep(philo->status->time_eat * 1000);
 	pthread_mutex_unlock(philo->right_fork);

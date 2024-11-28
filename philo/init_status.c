@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_mode.c                                        :+:      :+:    :+:   */
+/*   init_status.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eneto <eneto@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 12:24:30 by eneto             #+#    #+#             */
-/*   Updated: 2024/11/27 16:26:08 by eneto            ###   ########.fr       */
+/*   Updated: 2024/11/28 15:08:25 by eneto            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ int	ft_malloc_philos(t_status *status)
 
 int	ft_malloc_struct(t_status *status, char **argv)
 {
+	if (ft_atol(argv[1]) < 1 || ft_atol(argv[1]) > 200)
+		return (1);
 	status->philo_nbr = ft_atol(argv[1]);
 	status->time_die = ft_atol(argv[2]);
 	status->time_eat = ft_atol(argv[3]);

@@ -6,7 +6,7 @@
 /*   By: eneto <eneto@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 08:35:01 by eneto             #+#    #+#             */
-/*   Updated: 2024/11/27 12:03:35 by eneto            ###   ########.fr       */
+/*   Updated: 2024/11/28 14:52:08 by eneto            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int	main(int argc, char **argv)
 		return (1);
 	if (ft_malloc_struct(status, argv) == 1)
 	{
-		write(2, "bad malloc\n", 11);
-		ft_free_all(status);
+		write(2, "Parametros errados!\n", 19);
+		free(status);
 		return (1);
 	}
 	if (ft_start_routine(status) == 1)

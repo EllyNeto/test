@@ -6,7 +6,7 @@
 /*   By: eneto <eneto@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:08:50 by eneto             #+#    #+#             */
-/*   Updated: 2024/11/27 16:29:16 by eneto            ###   ########.fr       */
+/*   Updated: 2024/11/28 15:14:05 by eneto            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,13 @@ void	*ft_routine(void *m)
 void	v_status(t_status *status)
 {
 	int	i;
-
+	
 	i = 0;
-	while (i < status->philo_nbr)
+	while (status->philo_nbr > i)
 	{
 		if (ft_time_diff(status->philos[i].last_meal_time) > status->time_die)
 		{
-			printf("%ld philo %d is dead.\n", ft_time_diff(status->start_actv),
+			printf("%ld philo %d died.\n", ft_time_diff(status->start_actv),
 				status->philos[i].id);
 			pthread_mutex_lock(&status->end_actv_lock);
 			status->end_actv = 1;
@@ -65,7 +65,7 @@ int	ft_start_routine(t_status *status)
 	int	i;
 
 	i = 0;
-	while (status->philo_nbr > i)
+	while  (status->philo_nbr > i)
 	{
 		pthread_create(&status->philos[i].thread, NULL, ft_routine,
 			&status->philos[i]);
