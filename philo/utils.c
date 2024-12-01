@@ -6,7 +6,7 @@
 /*   By: eneto <eneto@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 12:23:34 by eneto             #+#    #+#             */
-/*   Updated: 2024/11/27 12:03:05 by eneto            ###   ########.fr       */
+/*   Updated: 2024/12/01 14:30:06 by eneto            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ long	ft_atol(char *str)
 
 void	ft_free_all(t_status *philo)
 {
+	int	i;
+
+	i = 0;
 	if(philo->forks)
 	{
 		pthread_mutex_destroy(philo->philos->left_fork);
@@ -38,13 +41,19 @@ void	ft_free_all(t_status *philo)
 		pthread_mutex_destroy(philo->forks);
 		free(philo->forks);
 	}
-	else if(philo->philo_nbr)
-			free(&philo->philo_nbr);
+	if (philo->philo_nbr)
+		free(&philo->philo_nbr);
 	else if (philo->philos->thread)
-			pthread_detach(philo->philos->thread);
+		pthread_detach(philo->philos->thread);
+	while (philo->philo_nbr > i)
+	{
+		free(&philo->philos[i]);
+		i++;
+	}
 	free(philo->philos);
 	free(philo);
 }
+
 long	ft_get_time_in_milis(void)
 {
 	struct timeval	tv;
