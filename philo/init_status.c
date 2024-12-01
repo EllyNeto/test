@@ -6,7 +6,7 @@
 /*   By: eneto <eneto@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 12:24:30 by eneto             #+#    #+#             */
-/*   Updated: 2024/11/28 15:08:25 by eneto            ###   ########.fr       */
+/*   Updated: 2024/12/01 15:47:17 by eneto            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	ft_init_mtx(t_status *mtx)
 		i++;
 	}
 	pthread_mutex_init(&mtx->end_actv_lock, NULL);
-	pthread_mutex_init(&mtx->philos->meal_lock, NULL);
 	return ;
 }
 

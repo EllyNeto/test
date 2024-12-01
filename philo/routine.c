@@ -6,7 +6,7 @@
 /*   By: eneto <eneto@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:08:50 by eneto             #+#    #+#             */
-/*   Updated: 2024/12/01 13:25:32 by eneto            ###   ########.fr       */
+/*   Updated: 2024/12/01 15:36:13 by eneto            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	*ft_routine(void *m)
 void	v_status(t_status *status)
 {
 	int	i;
-	
+
 	i = 0;
 	while (status->philo_nbr > i)
 	{
@@ -65,7 +65,7 @@ int	ft_start_routine(t_status *status)
 	int	i;
 
 	i = 0;
-	while  (status->philo_nbr > i)
+	while (status->philo_nbr > i)
 	{
 		pthread_create(&status->philos[i].thread, NULL, ft_routine,
 			&status->philos[i]);
@@ -79,8 +79,8 @@ int	ft_start_routine(t_status *status)
 		if (status->end_actv == 1)
 			return (0);
 	}
-	i = -1;
-	while (status->philo_nbr > ++i)
-		pthread_join(status->philos[i].thread, NULL);
+	// i = -1;
+	// while (status->philo_nbr > ++i)
+	// 	pthread_join(status->philos[i].thread, NULL);
 	return (0);
 }

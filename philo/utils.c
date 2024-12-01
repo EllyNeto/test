@@ -6,7 +6,7 @@
 /*   By: eneto <eneto@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 12:23:34 by eneto             #+#    #+#             */
-/*   Updated: 2024/12/01 14:30:06 by eneto            ###   ########.fr       */
+/*   Updated: 2024/12/01 15:57:52 by eneto            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,25 +31,23 @@ long	ft_atol(char *str)
 
 void	ft_free_all(t_status *philo)
 {
-	int	i;
+	int i = 0;
+
+	if (philo->forks)
+	{
+		while (i < philo->philo_nbr)
+			pthread_mutex_destroy(&philo->forks[i++]);
+	}
+
+	pthread_mutex_destroy(&philo->end_actv_lock);
 
 	i = 0;
-	if(philo->forks)
+	while (i < philo->philo_nbr)
 	{
-		pthread_mutex_destroy(philo->philos->left_fork);
-		pthread_mutex_destroy(philo->philos->right_fork);
-		pthread_mutex_destroy(philo->forks);
-		free(philo->forks);
-	}
-	if (philo->philo_nbr)
-		free(&philo->philo_nbr);
-	else if (philo->philos->thread)
-		pthread_detach(philo->philos->thread);
-	while (philo->philo_nbr > i)
-	{
-		free(&philo->philos[i]);
+		pthread_join(philo->philos[i].thread, NULL);
 		i++;
 	}
+	free(philo->forks);
 	free(philo->philos);
 	free(philo);
 }
@@ -65,4 +63,11 @@ long	ft_get_time_in_milis(void)
 long	ft_time_diff(long time)
 {
 	return (ft_get_time_in_milis() - time);
+}
+
+void	verify(t_philo *vrf)
+{
+	if (vrf->status->nbr_limit_meals != -1
+		&& vrf->meals_counter >= vrf->status->nbr_limit_meals)
+		vrf->full = 1;
 }
