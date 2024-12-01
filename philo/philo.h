@@ -6,7 +6,7 @@
 /*   By: eneto <eneto@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 08:32:43 by eneto             #+#    #+#             */
-/*   Updated: 2024/11/27 15:10:50 by eneto            ###   ########.fr       */
+/*   Updated: 2024/12/01 13:06:22 by eneto            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int						ft_malloc_philos(t_status *status);
 int						ft_malloc_struct(t_status *status, char **argv);
 
 // status
+void	limit_meals(t_status *meals_l);
 void					t_eat(t_philo *philo);
 void					v_status(t_status *status);
 void					t_think(t_philo *philo);

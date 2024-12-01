@@ -1,7 +1,7 @@
 NAME = philo
 CC = cc
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror 
+CFLAGS = -Wall -Wextra -Werror -g
 SRCS = main.c init_status.c utils.c routine.c status.c 
 OBJS = $(SRCS:.c=.o)
 

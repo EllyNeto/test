@@ -6,7 +6,7 @@
 /*   By: eneto <eneto@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:08:50 by eneto             #+#    #+#             */
-/*   Updated: 2024/11/28 15:14:05 by eneto            ###   ########.fr       */
+/*   Updated: 2024/12/01 13:25:32 by eneto            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	*ft_routine(void *m)
 	t_philo	*philo;
 
 	philo = (t_philo *)m;
-	if (philo->id % 2)
-		usleep(100);
+	if (philo->id % 2 == 0)
+		usleep(1000);
 	while (1)
 	{
 		pthread_mutex_lock(&philo->status->end_actv_lock);
@@ -49,11 +49,11 @@ void	v_status(t_status *status)
 	{
 		if (ft_time_diff(status->philos[i].last_meal_time) > status->time_die)
 		{
-			printf("%ld philo %d died.\n", ft_time_diff(status->start_actv),
-				status->philos[i].id);
 			pthread_mutex_lock(&status->end_actv_lock);
 			status->end_actv = 1;
 			pthread_mutex_unlock(&status->end_actv_lock);
+			printf("%ld philo %d died.\n", ft_time_diff(status->start_actv),
+				status->philos[i].id);
 			return ;
 		}
 		i++;
@@ -75,6 +75,9 @@ int	ft_start_routine(t_status *status)
 	{
 		usleep(500);
 		v_status(status);
+		limit_meals(status);
+		if (status->end_actv == 1)
+			return (0);
 	}
 	i = -1;
 	while (status->philo_nbr > ++i)
