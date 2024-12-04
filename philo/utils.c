@@ -6,7 +6,7 @@
 /*   By: eneto <eneto@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 12:23:34 by eneto             #+#    #+#             */
-/*   Updated: 2024/12/01 15:57:52 by eneto            ###   ########.fr       */
+/*   Updated: 2024/12/04 19:28:09 by eneto            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,15 @@ long	ft_atol(char *str)
 
 void	ft_free_all(t_status *philo)
 {
-	int i = 0;
+	int	i;
 
+	i = 1;
 	if (philo->forks)
 	{
 		while (i < philo->philo_nbr)
 			pthread_mutex_destroy(&philo->forks[i++]);
 	}
-
 	pthread_mutex_destroy(&philo->end_actv_lock);
-
-	i = 0;
-	while (i < philo->philo_nbr)
-	{
-		pthread_join(philo->philos[i].thread, NULL);
-		i++;
-	}
 	free(philo->forks);
 	free(philo->philos);
 	free(philo);

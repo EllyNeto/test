@@ -6,7 +6,7 @@
 /*   By: eneto <eneto@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 12:24:30 by eneto             #+#    #+#             */
-/*   Updated: 2024/12/01 15:47:17 by eneto            ###   ########.fr       */
+/*   Updated: 2024/12/04 19:29:29 by eneto            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ int	ft_malloc_philos(t_status *status)
 
 	i = 0;
 	status->philos = malloc(sizeof(t_philo) * status->philo_nbr);
-	ft_init_mtx(status);
 	if (status->philos == NULL)
 		return (1);
+	ft_init_mtx(status);
 	while (status->philo_nbr > i)
 	{
 		status->philos[i].id = i + 1;
