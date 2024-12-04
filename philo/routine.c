@@ -6,7 +6,7 @@
 /*   By: eneto <eneto@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:08:50 by eneto             #+#    #+#             */
-/*   Updated: 2024/12/01 15:36:13 by eneto            ###   ########.fr       */
+/*   Updated: 2024/12/04 21:27:11 by eneto            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,11 @@ void	v_status(t_status *status)
 			pthread_mutex_unlock(&status->end_actv_lock);
 			printf("%ld philo %d died.\n", ft_time_diff(status->start_actv),
 				status->philos[i].id);
+			if (status->philo_nbr == 1)
+			{
+				pthread_mutex_unlock(status->philos->left_fork);
+				return ;
+			}
 			return ;
 		}
 		i++;
@@ -67,9 +72,11 @@ int	ft_start_routine(t_status *status)
 	i = 0;
 	while (status->philo_nbr > i)
 	{
-		pthread_create(&status->philos[i].thread, NULL, ft_routine,
-			&status->philos[i]);
-		i++;
+		if (pthread_create(&status->philos[i].thread, NULL, ft_routine,
+				&status->philos[i]))
+				return (1);
+				
+			i++;
 	}
 	while (status->end_actv != 1)
 	{
@@ -79,8 +86,11 @@ int	ft_start_routine(t_status *status)
 		if (status->end_actv == 1)
 			return (0);
 	}
-	// i = -1;
-	// while (status->philo_nbr > ++i)
-	// 	pthread_join(status->philos[i].thread, NULL);
+	i = 0;
+	while (status->philo_nbr > i)
+	{
+		pthread_join(status->philos[i].thread, NULL);
+		i++;
+	}
 	return (0);
 }

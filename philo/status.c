@@ -6,7 +6,7 @@
 /*   By: eneto <eneto@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:09:20 by eneto             #+#    #+#             */
-/*   Updated: 2024/12/01 14:55:07 by eneto            ###   ########.fr       */
+/*   Updated: 2024/12/04 18:44:05 by eneto            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,6 @@ void	t_sleep(t_philo *philo)
 	usleep(philo->status->time_sleep * 1000);
 }
 
-void	ft_lock_f(t_philo *lock)
-{
-	if (lock->status->end_actv == 1)
-	{
-		pthread_mutex_unlock(lock->right_fork);
-		pthread_mutex_unlock(lock->left_fork);
-		return ;
-	}
-}
-
 void	limit_meals(t_status *meals_l)
 {
 	int	i;
@@ -56,6 +46,16 @@ void	limit_meals(t_status *meals_l)
 	return ;
 }
 
+void	ft_lock_f(t_philo *lock)
+{
+	if (lock->status->end_actv == 1)
+	{
+		pthread_mutex_unlock(lock->right_fork);
+		pthread_mutex_unlock(lock->left_fork);
+		return ;
+	}
+}
+
 void	t_eat(t_philo *philo)
 {
 	pthread_mutex_lock(philo->left_fork);
@@ -64,19 +64,22 @@ void	t_eat(t_philo *philo)
 		pthread_mutex_unlock(philo->left_fork);
 		return ;
 	}
-	printf("%ld philo %d taken a fork.\n",
-		ft_time_diff(philo->status->start_actv), philo->id);
+	ft_wtf(philo);
 	pthread_mutex_lock(philo->right_fork);
-	ft_lock_f(philo);
-	printf("%ld philo %d taken a fork.\n",
-		ft_time_diff(philo->status->start_actv), philo->id);
+	if (philo->status->end_actv == 1)
+	{
+		pthread_mutex_unlock(philo->right_fork);
+		pthread_mutex_unlock(philo->left_fork);
+		return ;
+	}
+	ft_wtf(philo);
 	philo->last_meal_time = ft_get_time_in_milis();
 	philo->meals_counter++;
 	verify(philo);
 	ft_lock_f(philo);
-	printf("%ld philo %d is eating.\n", ft_time_diff(philo->status->start_actv),
-		philo->id);
+	ft_wie(philo);
 	usleep(philo->status->time_eat * 1000);
 	pthread_mutex_unlock(philo->right_fork);
 	pthread_mutex_unlock(philo->left_fork);
+	return ;
 }
