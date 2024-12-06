@@ -6,7 +6,7 @@
 /*   By: eneto <eneto@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 12:24:30 by eneto             #+#    #+#             */
-/*   Updated: 2024/12/04 19:29:29 by eneto            ###   ########.fr       */
+/*   Updated: 2024/12/06 16:10:55 by eneto            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,7 @@ int	ft_malloc_philos(t_status *status)
 		status->philos[i].meals_counter = 0;
 		status->philos[i].last_meal_time = status->start_actv;
 		status->philos[i].full = 0;
-		status->philos[i].left_fork = &status->forks[i];
-		status->philos[i].right_fork = &status->forks[(i + 1)
-			% status->philo_nbr];
+		ft_ini_f(status);
 		status->philos[i].status = status;
 		i++;
 	}
