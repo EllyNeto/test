@@ -6,7 +6,7 @@
 /*   By: eneto <eneto@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 08:32:43 by eneto             #+#    #+#             */
-/*   Updated: 2024/12/06 13:19:50 by eneto            ###   ########.fr       */
+/*   Updated: 2024/12/06 16:19:24 by eneto            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_status
 	long				nbr_limit_meals;
 	long				start_actv;
 	int					end_actv;
+	pthread_mutex_t		actv_lock;
 	pthread_mutex_t		end_actv_lock;
 	pthread_mutex_t		*forks;
 	t_philo				*philos;
