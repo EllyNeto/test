@@ -6,19 +6,36 @@
 /*   By: eneto <eneto@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:08:50 by eneto             #+#    #+#             */
-/*   Updated: 2024/11/27 16:29:16 by eneto            ###   ########.fr       */
+/*   Updated: 2024/12/09 15:27:57 by eneto            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int		ft_onephilo(t_philo *philo)
+{
+	if (philo->status->philo_nbr == 1)
+	{
+		pthread_mutex_lock(philo->left_fork);
+		printf("%ld philo %d taken a fork.\n",
+			ft_time_diff(philo->status->start_actv), philo->id);
+		usleep(philo->status->time_die * 1000);
+		pthread_mutex_unlock(philo->left_fork);
+		return (0);
+	}
+	if (philo->id % 2)
+		usleep(100);
+	return (0);
+}
 
 void	*ft_routine(void *m)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)m;
-	if (philo->id % 2)
-		usleep(100);
+	if (ft_onephilo(philo) == 1)
+		return ;
+
 	while (1)
 	{
 		pthread_mutex_lock(&philo->status->end_actv_lock);
@@ -75,6 +92,7 @@ int	ft_start_routine(t_status *status)
 	{
 		usleep(500);
 		v_status(status);
+		limit_meals(status);
 	}
 	i = -1;
 	while (status->philo_nbr > ++i)

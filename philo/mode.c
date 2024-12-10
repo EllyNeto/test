@@ -6,7 +6,7 @@
 /*   By: eneto <eneto@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:09:20 by eneto             #+#    #+#             */
-/*   Updated: 2024/11/27 16:21:54 by eneto            ###   ########.fr       */
+/*   Updated: 2024/12/09 14:09:56 by eneto            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,22 @@ void	t_sleep(t_philo *philo)
 		ft_time_diff(philo->status->start_actv), philo->id);
 	usleep(philo->status->time_sleep * 1000);
 }
+void	limit_meals(t_status *meals_l)
+{
+	int	i;
+	int	j;
 
+	j = 0;
+	i = -1;
+	while (++i < meals_l->philo_nbr)
+	{
+		if (meals_l->philos[i].full == 1)
+			j++;
+		if (j == meals_l->philo_nbr)
+			meals_l->end_actv = 1;
+	}
+	return ;
+}
 void	ft_lock_f(t_philo *lock)
 {
 	if (lock->status->end_actv == 1)
@@ -60,8 +75,9 @@ void	t_eat(t_philo *philo)
 		ft_time_diff(philo->status->start_actv), philo->id);
 	philo->last_meal_time = ft_get_time_in_milis();
 	philo->meals_counter++;
+	verify(philo);
 	ft_lock_f(philo);
-	printf("%ld philo %d is eathing.\n",
+	printf("%ld philo %d is eating.\n",
 		ft_time_diff(philo->status->start_actv), philo->id);
 	usleep(philo->status->time_eat * 1000);
 	pthread_mutex_unlock(philo->right_fork);

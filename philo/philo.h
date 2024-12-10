@@ -6,7 +6,7 @@
 /*   By: eneto <eneto@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 08:32:43 by eneto             #+#    #+#             */
-/*   Updated: 2024/11/27 15:10:50 by eneto            ###   ########.fr       */
+/*   Updated: 2024/12/09 14:08:29 by eneto            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ typedef struct s_status
 	t_philo				*philos;
 }						t_status;
 // functioms aux
+void					verify(t_philo *vrf);
+void					limit_meals(t_status *meals_l);
 void					ft_free_all(t_status *philo);
 long					ft_time_diff(long time);
 long					ft_get_time_in_milis(void);
