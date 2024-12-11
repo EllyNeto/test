@@ -6,7 +6,7 @@
 /*   By: eneto <eneto@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 08:32:43 by eneto             #+#    #+#             */
-/*   Updated: 2024/12/06 16:19:24 by eneto            ###   ########.fr       */
+/*   Updated: 2024/12/11 08:43:58 by eneto            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_philo
 	long				meals_counter;
 	long				last_meal_time;
 	int					full;
+	int					is_eating;
 	pthread_mutex_t		*left_fork;
 	pthread_mutex_t		*right_fork;
 	pthread_t			thread;
@@ -39,10 +40,11 @@ typedef struct s_status
 	int					philo_nbr;
 	long				time_die;
 	long				time_eat;
-	int					time_sleep;
+	long				time_sleep;
 	long				nbr_limit_meals;
 	long				start_actv;
 	int					end_actv;
+	pthread_mutex_t		lock;
 	pthread_mutex_t		actv_lock;
 	pthread_mutex_t		end_actv_lock;
 	pthread_mutex_t		*forks;

@@ -6,7 +6,7 @@
 /*   By: eneto <eneto@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 11:29:47 by eneto             #+#    #+#             */
-/*   Updated: 2024/12/09 12:07:43 by eneto            ###   ########.fr       */
+/*   Updated: 2024/12/11 08:56:49 by eneto            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_ini_f(t_status *status)
 	i = 0;
 	while (status->philo_nbr > i)
 	{
-		if ((i + 1) % 2 == 0)
+		if (status->philos[i].id % 2 == 0)
 		{
 			status->philos[i].left_fork = &status->forks[i];
 			status->philos[i].right_fork = &status->forks[(i + 1)
@@ -33,7 +33,6 @@ void	ft_ini_f(t_status *status)
 		}
 		i++;
 	}
-	return ;
 }
 
 void	ft_wtf(t_philo *philo)
@@ -41,9 +40,11 @@ void	ft_wtf(t_philo *philo)
 	pthread_mutex_lock(&philo->status->end_actv_lock);
 	if (philo->status->end_actv == 0)
 	{
+		pthread_mutex_unlock(&philo->status->end_actv_lock);
+		pthread_mutex_lock(&philo->status->actv_lock);
 		printf("%ld philo %d taken a fork.\n",
 			ft_time_diff(philo->status->start_actv), philo->id);
-		pthread_mutex_unlock(&philo->status->end_actv_lock);
+		pthread_mutex_unlock(&philo->status->actv_lock);
 		return ;
 	}
 	pthread_mutex_unlock(&philo->status->end_actv_lock);
@@ -55,9 +56,11 @@ void	ft_wie(t_philo *philo)
 	pthread_mutex_lock(&philo->status->end_actv_lock);
 	if (philo->status->end_actv == 0)
 	{
+		pthread_mutex_unlock(&philo->status->end_actv_lock);
+		pthread_mutex_lock(&philo->status->actv_lock);
 		printf("%ld philo %d is eating.\n",
 			ft_time_diff(philo->status->start_actv), philo->id);
-		pthread_mutex_unlock(&philo->status->end_actv_lock);
+		pthread_mutex_unlock(&philo->status->actv_lock);
 		return ;
 	}
 	pthread_mutex_unlock(&philo->status->end_actv_lock);

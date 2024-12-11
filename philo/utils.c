@@ -6,7 +6,7 @@
 /*   By: eneto <eneto@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 12:23:34 by eneto             #+#    #+#             */
-/*   Updated: 2024/12/09 12:13:04 by eneto            ###   ########.fr       */
+/*   Updated: 2024/12/11 09:04:16 by eneto            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,15 @@ void	ft_free_all(t_status *philo)
 {
 	int	i;
 
-	i = 1;
+	i = 0;
 	if (philo->forks)
 	{
 		while (i < philo->philo_nbr)
 			pthread_mutex_destroy(&philo->forks[i++]);
 	}
 	pthread_mutex_destroy(&philo->end_actv_lock);
+	pthread_mutex_destroy(&philo->actv_lock);
+	pthread_mutex_destroy(&philo->lock);
 	free(philo->forks);
 	free(philo->philos);
 	free(philo);
