@@ -6,7 +6,7 @@
 /*   By: eneto <eneto@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 12:24:30 by eneto             #+#    #+#             */
-/*   Updated: 2024/12/04 19:29:29 by eneto            ###   ########.fr       */
+/*   Updated: 2024/12/11 08:44:43 by eneto            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	ft_init_mtx(t_status *mtx)
 		i++;
 	}
 	pthread_mutex_init(&mtx->end_actv_lock, NULL);
+	pthread_mutex_init(&mtx->actv_lock, NULL);
+	pthread_mutex_init(&mtx->lock, NULL);
 	return ;
 }
 
@@ -41,12 +43,10 @@ int	ft_malloc_philos(t_status *status)
 		status->philos[i].meals_counter = 0;
 		status->philos[i].last_meal_time = status->start_actv;
 		status->philos[i].full = 0;
-		status->philos[i].left_fork = &status->forks[i];
-		status->philos[i].right_fork = &status->forks[(i + 1)
-			% status->philo_nbr];
 		status->philos[i].status = status;
 		i++;
 	}
+	ft_ini_f(status);
 	return (0);
 }
 

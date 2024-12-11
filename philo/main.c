@@ -6,7 +6,7 @@
 /*   By: eneto <eneto@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 08:35:01 by eneto             #+#    #+#             */
-/*   Updated: 2024/12/01 14:37:16 by eneto            ###   ########.fr       */
+/*   Updated: 2024/12/11 08:36:42 by eneto            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(int argc, char **argv)
 	if (argc != 5 && argc != 6)
 		return (1);
 	status = malloc(sizeof(t_status));
-	if (!status)
+	if (status == NULL)
 		return (1);
 	if (ft_malloc_struct(status, argv) == 1)
 	{
