@@ -6,7 +6,7 @@
 /*   By: eneto <eneto@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:09:20 by eneto             #+#    #+#             */
-/*   Updated: 2024/12/11 09:05:41 by eneto            ###   ########.fr       */
+/*   Updated: 2024/12/11 16:49:39 by eneto            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	t_sleep(t_philo *philo)
 	}
 	else
 		pthread_mutex_unlock(&philo->status->end_actv_lock);
-	usleep(philo->status->time_sleep * 1000);
+	ft_sleep(philo->status->time_sleep, philo);
 }
 
 void	t_eat(t_philo *philo)
@@ -55,7 +55,7 @@ void	t_eat(t_philo *philo)
 	pthread_mutex_unlock(&philo->status->lock);
 	verify(philo);
 	ft_wie(philo);
-	usleep(philo->status->time_eat * 1000);
+	ft_sleep(philo->status->time_eat, philo);
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
 	return ;
