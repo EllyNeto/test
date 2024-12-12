@@ -6,33 +6,27 @@
 /*   By: eneto <eneto@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 11:29:47 by eneto             #+#    #+#             */
-/*   Updated: 2024/12/11 08:56:49 by eneto            ###   ########.fr       */
+/*   Updated: 2024/12/12 08:23:32 by eneto            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	ft_ini_f(t_status *status)
+void	limit_meals(t_status *meals_l)
 {
 	int	i;
+	int	j;
 
-	i = 0;
-	while (status->philo_nbr > i)
+	j = 0;
+	i = -1;
+	while (++i < meals_l->philo_nbr)
 	{
-		if (status->philos[i].id % 2 == 0)
-		{
-			status->philos[i].left_fork = &status->forks[i];
-			status->philos[i].right_fork = &status->forks[(i + 1)
-				% status->philo_nbr];
-		}
-		else
-		{
-			status->philos[i].right_fork = &status->forks[i];
-			status->philos[i].left_fork = &status->forks[(i + 1)
-				% status->philo_nbr];
-		}
-		i++;
+		if (meals_l->philos[i].full == 1)
+			j++;
+		if (j == meals_l->philo_nbr)
+			meals_l->end_actv = 1;
 	}
+	return ;
 }
 
 void	ft_wtf(t_philo *philo)
@@ -67,32 +61,43 @@ void	ft_wie(t_philo *philo)
 	return ;
 }
 
-void	limit_meals(t_status *meals_l)
+void	ft_sleep(long time_in_ms, t_philo *philo)
 {
-	int	i;
-	int	j;
+	long	start;
 
-	j = 0;
-	i = -1;
-	while (++i < meals_l->philo_nbr)
+	start = ft_get_time_in_milis();
+	while ((ft_get_time_in_milis() - start) < time_in_ms)
 	{
-		if (meals_l->philos[i].full == 1)
-			j++;
-		if (j == meals_l->philo_nbr)
-			meals_l->end_actv = 1;
+		pthread_mutex_lock(&philo->status->end_actv_lock);
+		if (philo->status->end_actv == 1)
+		{
+			pthread_mutex_unlock(&philo->status->end_actv_lock);
+			break ;
+		}
+		pthread_mutex_unlock(&philo->status->end_actv_lock);
+		usleep(100);
 	}
-	return ;
 }
 
-void	ft_lock_f(t_philo *lock)
+void	ft_ini_f(t_status *status)
 {
-	pthread_mutex_lock(&lock->status->end_actv_lock);
-	if (lock->status->end_actv == 1)
+	int	i;
+
+	i = 0;
+	while (status->philo_nbr > i)
 	{
-		pthread_mutex_unlock(&lock->status->end_actv_lock);
-		pthread_mutex_unlock(lock->left_fork);
-		pthread_mutex_unlock(lock->right_fork);
-		return ;
+		if (status->philos[i].id % 2 == 0)
+		{
+			status->philos[i].left_fork = &status->forks[i];
+			status->philos[i].right_fork = &status->forks[(i + 1)
+				% status->philo_nbr];
+		}
+		else
+		{
+			status->philos[i].right_fork = &status->forks[i];
+			status->philos[i].left_fork = &status->forks[(i + 1)
+				% status->philo_nbr];
+		}
+		i++;
 	}
-	pthread_mutex_unlock(&lock->status->end_actv_lock);
 }

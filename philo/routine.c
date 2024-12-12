@@ -6,7 +6,7 @@
 /*   By: eneto <eneto@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:08:50 by eneto             #+#    #+#             */
-/*   Updated: 2024/12/11 09:12:49 by eneto            ###   ########.fr       */
+/*   Updated: 2024/12/12 08:04:37 by eneto            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	ft_onephilo(t_philo *philo)
 		pthread_mutex_unlock(philo->left_fork);
 		return (1);
 	}
-	if (philo->id % 2 == 1)
-		usleep(1000);
+	if (philo->id % 2 == 0)
+		usleep(100);
 	return (0);
 }
 
@@ -86,7 +86,7 @@ int	ft_start_routine(t_status *status)
 	}
 	while (status->end_actv != 1)
 	{
-		usleep(2000);
+		usleep(1000);
 		v_status(status);
 		limit_meals(status);
 	}
