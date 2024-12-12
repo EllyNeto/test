@@ -12,12 +12,35 @@
 
 #include "philo.h"
 
+int	ft_check_args(int argc, char **argv)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (++i < argc)
+	{
+		j = 0;
+		while (argv[i][j])
+		{
+			if (!((argv[i][j] >= '0' && argv[i][j] <= '9') || argv[i][j] == ' '
+					|| argv[i][j] == '\t' || argv[i][j] == '-'
+					|| argv[i][j] == '+'))
+				return (1);
+			j++;
+		}
+	}
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_status	*status;
 
 	status = NULL;
 	if (argc != 5 && argc != 6)
+		return (1);
+	if (ft_check_args(argc, argv))
 		return (1);
 	status = malloc(sizeof(t_status));
 	if (status == NULL)
