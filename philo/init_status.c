@@ -64,9 +64,9 @@ int	ft_malloc_struct(t_status *status, char **argv)
 		status->nbr_limit_meals = -1;
 	status->start_actv = ft_get_time_in_milis();
 	status->end_actv = 0;
-	if ((argv[5] != NULL && status->nbr_limit_meals < 0)
-		|| status->philo_nbr <= 0 || status->time_die < 0
-		|| status->time_eat < 0 || status->time_sleep < 0)
+	if ((argv[5] != NULL && status->nbr_limit_meals <= 0)
+		|| status->philo_nbr <= 0 || status->time_die <= 0
+		|| status->time_eat <= 0 || status->time_sleep <= 0)
 		return (1);
 	status->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
 			* status->philo_nbr);
